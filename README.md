@@ -6,4 +6,5 @@
 ### A wrapper around MyWaifuList
 https://mywaifulist.docs.stoplight.io/api-reference
 
-
+### Documentation
+You can find it [here](https://deivu.github.io/Murasame/)
