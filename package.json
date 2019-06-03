@@ -11,6 +11,14 @@
   "repository": {
     "url": "https://github.com/Deivu/Murasame"
   },
+  "keywords": [
+    "MyWaifuList",
+    "MyWaifuList Wrapper",
+    "MyWaifuList API Wrapper",
+    "https://mywaifulist.moe/",
+    "api",
+    "wrapper"
+  ],
   "dependencies": {
     "node-fetch": "^2.6.0",
     "abort-controller": "^3.0.0"
