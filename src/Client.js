@@ -7,11 +7,21 @@ class Client {
      * @param {string} token API key that has been registered with MyWaifuList
      */
     constructor(token) {
+        /**
+         * MyWaifuList API Token
+         * @private
+         * @type {string}
+         */
         Object.defineProperty(this, 'token', { value: token });
+        /**
+        * The Base URL of the MyWaifuList API
+        * @type {string} 
+        */
         this.baseurl = 'https://mywaifulist.moe/api/v1';
     }
 
     // Waifu Endpoints
+
     /**
      * Returns the waifu specified by the given slug
      * @param {string} slug The slug (Waifu / Series)
@@ -186,7 +196,7 @@ class Client {
         return this._post('/search/beta', term);
     }
 
-    // Private Function for the SEARCH POST ENDPOINTS
+    // Private Functions
 
     /**
      * Make a POST request to MyWaifuList
@@ -220,8 +230,6 @@ class Client {
             return body.json();
         });
     }
-
-    // Private Function for GET endpoints of the My Waifu List API
 
     /**
      * Make a GET request to MyWaifuList
