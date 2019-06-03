@@ -1,0 +1,46 @@
+{
+    "src":[
+        "./src/*.js",
+        "./README.md"
+    ],
+    "dest":"./docs",
+    "jsdoc":{
+        "hierarchy":"true",
+        "plugins":[
+            "plugins/markdown"
+        ]
+    },
+    "markdown":{
+        "sanitize":false
+    },
+    "app":{
+        "title":"Murasame | A wrapper around MyWaifuList",
+        "routing":"query",
+        "entrance":"content:readme",
+        "base":"/Murasame"
+    },
+    "template":{
+        "options":{
+            "title":{
+                "label":"Murasame",
+                "href":"."
+            },
+            "navbar":{
+                "menu":[
+                    {
+                        "label":"Readme",
+                        "href":"."
+                    },
+                    {
+                        "label":"Documentation",
+                        "href":"?api"
+                    },
+                    {
+                        "label":"GitHub",
+                        "href":"https://github.com/Deivu/Murasame"
+                    }
+                ]
+            }
+        }
+    }
+}

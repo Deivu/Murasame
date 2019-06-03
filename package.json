@@ -9,10 +9,13 @@
   "author": "Deivu (Saya)",
   "license": "MIT",
   "repository": {
-		"url": "https://github.com/Deivu/Murasame"
-	},
+    "url": "https://github.com/Deivu/Murasame"
+  },
   "dependencies": {
     "node-fetch": "^2.6.0",
     "abort-controller": "^3.0.0"
+  },
+  "devDependencies": {
+    "docma": "^3.2.2"
   }
 }
