@@ -1,12 +1,12 @@
 {
   "name": "murasame",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A wrapper around My Waifu List (https://mywaifulist.docs.stoplight.io/api-reference)",
   "main": "index.js",
   "scripts": {
     "test": "node ./tests/testing.js"
   },
-  "author": "Deivu (Saya)",
+  "author": "Deivu",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/Deivu/Murasame"

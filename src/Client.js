@@ -244,20 +244,17 @@ class Client {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 15000);
         return fetch(url.toString(), { headers: { apikey: this.token }, signal: controller.signal })
-            .then((body, error) => {
-                if (error) {
-                    if (error.name === 'AbortError') {
-                        throw new Error('My Waifu List Wrapper Request Timeout.');
-                    }
-                    clearTimeout(timeout);
-                    throw error;
-                }
+            .then((body) => {
                 clearTimeout(timeout);
                 if (!body.ok)
                     throw new Error('My Waifu List API is probably offline');
                 if (body.status !== 200)
                     throw new Error(`My Waifu List API Error ${body.status}: ${body.body}`);
                 return body.json();
+            }, (error) => {
+                clearTimeout(timeout);
+                if (error.name === 'AbortError') error = new Error('My Waifu List API Wrapper Request Timeout.');
+                throw error;
             });
     }
 }
