@@ -1,9 +1,9 @@
 const fetch = require('node-fetch');
 const AbortController = require('abort-controller');
 
-class Client {
+class Murasame {
     /**
-     * MyWaifuList client
+     * MyWaifuList Murasame client
      * @param {string} token API key that has been registered with MyWaifuList
      */
     constructor(token) {
@@ -25,7 +25,7 @@ class Client {
     /**
      * Returns the waifu specified by the given slug
      * @param {string} slug The slug (Waifu / Series)
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-waifu#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-waifu#responses)
      */
     getWaifu(slug) {
         if (!slug) throw new Error('Parameter \'slug\' cannot be left blank');
@@ -36,7 +36,7 @@ class Client {
      * Returns paginated images from the gallery, in sets of 10
      * @param {string} slug The slug (Waifu / Series)
      * @param {number} [page=1] For pagination. Defaults to 1
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-waifu-images#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-waifu-images#responses)
      */
     getWaifuImages(slug, page) {
         if (!slug) throw new Error('Parameter \'slug\' cannot be left blank');
@@ -48,7 +48,7 @@ class Client {
      * Returns an array of Waifus, sorted alphabetically
      * @param {string} letter The letter to fetch (A-Z)
      * @param {number} [page=1] For pagination. Defaults to 1
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-waifus-by-page#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-waifus-by-page#responses)
      */
     getWaifuByPage(letter, page) {
         if (!letter) throw new Error('Parameter \'letter\' cannot be left blank');
@@ -58,7 +58,7 @@ class Client {
 
     /**
      * Returns the Waifu of the day
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-daily-waifu#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-daily-waifu#responses)
      */
     getDailyWaifu() {
         return this._fetch('/meta/daily');
@@ -66,7 +66,7 @@ class Client {
 
     /**
      * Returns a random Waifu from the database
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-random-waifu#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/waifu/get-random-waifu#responses)
      */
     getRandomWaifu() {
         return this._fetch('/meta/random');
@@ -76,7 +76,7 @@ class Client {
 
     /**
      * Get a list of currently airing shows
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/get-airing-shows#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/get-airing-shows#responses)
      */
     getAiringShows() {
         return this._fetch('/airing');
@@ -84,7 +84,7 @@ class Client {
 
     /**
      * Get best waifus of the current season
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/airingbest#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/airingbest#responses)
      */
     getCurrentBestWaifus() {
         return this._fetch('/airing/best');
@@ -92,7 +92,7 @@ class Client {
 
     /**
      * Get a list of popular waifus (raw count of total votes) of the current season
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/airingpopular#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/airingpopular#responses)
      */
     getCurrentPopularWaifus() {
         return this._fetch('/airing/popular');
@@ -100,7 +100,7 @@ class Client {
 
     /**
      * Get the most disliked waifus of the current season
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/airingtrash#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/current-season/airingtrash#responses)
      */
     getCurrentTrashWaifus() {
         return this._fetch('/airing/trash');
@@ -111,7 +111,7 @@ class Client {
     /**
      * Returns the Waifu of the day
      * @param {string} slug The slug (Waifu / Series)
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/get-series#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/get-series#responses)
      */
     getSeries(slug) {
         if (!slug) throw new Error('Parameter \'slug\' cannot be left blank');
@@ -121,7 +121,7 @@ class Client {
     /**
      * Returns the Waifu of the day
      * @param {string} letter Starting letter (A-Z)
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/get-series-by-page#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/get-series-by-page#responses)
      */
     getSeriesByPage(letter) {
         if (!letter) throw new Error('Parameter \'letter\' cannot be left blank');
@@ -132,7 +132,7 @@ class Client {
      * Get list of shows that aired in a given season and year
      * @param {string} season The season the work first premiered (`winter`, `summer`, `spring`, `fall`) 
      * @param {number} year The year
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/get-airing-shows-by-season#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/get-airing-shows-by-season#responses)
      */
     getAiredShowsBySeason(season, year) {
         if (!season || !year) throw new Error('Parameter \'season, year\' cannot be left blank');
@@ -143,7 +143,7 @@ class Client {
      * Returns a set of waifus for a given series
      * @param {string} slug The slug (Waifu, Series)
      * @param {number} [page=1] For pagination. Defaults to 1 
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/getseriesslugwaifus#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/series/getseriesslugwaifus#responses)
      */
     getSeriesWaifus(slug, page) {
         if (!slug) throw new Error('Parameter \'slug\' cannot be left blank');
@@ -156,7 +156,7 @@ class Client {
     /**
      * Returns information about the user
      * @param {number} id User ID 
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/user/get-user-profile#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/user/get-user-profile#responses)
      */
     getUserProfile(id) {
         if (!id) throw new Error('Parameter \'id\' cannot be left blank');
@@ -168,7 +168,7 @@ class Client {
      * @param {number} id User ID 
      * @param {string} type Type (`created`, `like`, `trash`) 
      * @param {*} [page=1] For pagination. Defaults to 1
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/user/get-user-waifus#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/user/get-user-waifus#responses)
      */
     getUserWaifus(id, type, page) {
         if (!id || !type || !page)
@@ -181,7 +181,7 @@ class Client {
     /**
      * Allows searching for a Series or Waifu. Minimum search string: 4 characters.
      * @param {string} term Search term
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/search/search#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/search/search#responses)
      */
     search(term) {
         return this._post('/search', term);
@@ -190,7 +190,7 @@ class Client {
     /**
      * This search is more aggressive when it comes to name matching, resulting in better accuracy in most cases
      * @param {string} term Search term 
-     * @returns {*} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/search/search#responses)
+     * @returns {Promise<*>} Refer to [this](https://mywaifulist.docs.stoplight.io/api-reference/search/search#responses)
      */
     searchBeta(term) {
         return this._post('/search/beta', term);
@@ -203,7 +203,7 @@ class Client {
      * @private
      * @param {string} endpoint The endpoint
      * @param {*} term Search term
-     * @returns {*}
+     * @returns {Promise<*>}
      */
     _post(endpoint, term) {
         const url = new URL(this.baseurl + endpoint);
@@ -214,20 +214,17 @@ class Client {
             body: JSON.stringify({ term }),
             headers: { 'Content-Type': 'application/json', apikey: this.token },
             signal: controller.signal
-        }).then((body, error) => {
-            if (error) {
-                if (error.name === 'AbortError') {
-                    throw new Error('My Waifu List Wrapper Request Timeout.');
-                }
-                clearTimeout(timeout);
-                throw error;
-            }
+        }).then((body) => {
             clearTimeout(timeout);
             if (!body.ok)
-                throw new Error('My Waifu List API is probably offline');
+                throw new Error('MURASAME_ERROR: Response received is not ok.');
             if (body.status !== 200)
-                throw new Error(`My Waifu List API Error ${body.status}: ${body.body}`);
+                throw new Error(`MURASAME_ERROR: Code ${body.status}`);
             return body.json();
+        }, (error) => {
+            clearTimeout(timeout);
+            if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
+            throw error;
         });
     }
 
@@ -236,7 +233,7 @@ class Client {
      * @private
      * @param {string} endpoint The endpoint
      * @param {string|object|Iterable} [query] Query parameters
-     * @returns {*}
+     * @returns {Promise<*>}
      */
     _fetch(endpoint, query) {
         const url = new URL(this.baseurl + endpoint);
@@ -247,16 +244,16 @@ class Client {
             .then((body) => {
                 clearTimeout(timeout);
                 if (!body.ok)
-                    throw new Error('My Waifu List API is probably offline');
+                    throw new Error('MURASAME_ERROR: Response received is not ok.');
                 if (body.status !== 200)
-                    throw new Error(`My Waifu List API Error ${body.status}: ${body.body}`);
+                    throw new Error(`MURASAME_ERROR: Code ${body.status}`);
                 return body.json();
             }, (error) => {
                 clearTimeout(timeout);
-                if (error.name === 'AbortError') error = new Error('My Waifu List API Wrapper Request Timeout.');
+                if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
                 throw error;
             });
     }
 }
 
-module.exports = Client;
+module.exports = Murasame;

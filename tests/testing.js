@@ -1,7 +1,7 @@
-const { WaifuList } = require('../index.js')
+const { Murasame } = require('../index.js');
 
-const API = new WaifuList('a_very_lewd_token_tbh')
+const murasame = new Murasame('a_very_lewd_token_tbh');
 
-API.getRandomWaifu().then(console.log)
-API.getCurrentPopularWaifus().then(console.log)
-API.searchBeta('Saya Amanogawa').then(console.log)
+murasame.getRandomWaifu().then(console.log);
+murasame.getCurrentPopularWaifus().then(console.log);
+murasame.searchBeta('Saya Amanogawa').then(console.log);
