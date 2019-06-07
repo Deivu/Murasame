@@ -5,8 +5,31 @@
   <img src="https://vignette.wikia.nocookie.net/kancolle/images/7/7b/Murasame_Kai_Ni_Full.png/revision/latest/" style="max-width: 100%;">
 </p>
 
-<h3 id="a-wrapper-around-mywaifulist">A wrapper around MyWaifuList</h3>
-<p><a href="https://mywaifulist.docs.stoplight.io/api-reference">https://mywaifulist.docs.stoplight.io/api-reference</a></p>
-<h3 id="documentation">Documentation</h3>
+<h3 id="a-wrapper-around-mywaifulist-api">A wrapper around MyWaifuList API</h3>
+<p><a href="https://mywaifulist.docs.stoplight.io/api-reference">MyWaifuList API</a></p>
+<h2 id="installation-">Installation?</h2>
+<hr />
+<p>2 ways to install Murasame.</p>
+<blockquote>
+<ol>
+<li><code>npm i murasame-wrapper</code></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li><code>npm i Deivu/Murasame</code></li>
+</ol>
+</blockquote>
+<h2 id="documentation-for-murasame-">Documentation for Murasame?</h2>
+<hr />
 <p>You can find it <a href="https://deivu.github.io/Murasame/">here</a></p>
+<h2 id="changes-from-102-to-110">Changes from 1.0.2 to 1.1.0</h2>
+<hr />
+<p>There is only one simple change, and here it is.</p>
+<pre><code class="js">// 1.0.2
+const { WaifuList } = require('murasame-wrapper');
+const murasame = new WaifuList('token');
+// 1.1.0
+const { Murasame } = require('murasame-wrapper');
+const murasame = new Murasame('token');</code></pre>
 </body></html>
