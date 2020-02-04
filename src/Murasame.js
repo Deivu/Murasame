@@ -214,18 +214,20 @@ class Murasame {
             body: JSON.stringify({ term }),
             headers: { 'Content-Type': 'application/json', apikey: this.token },
             signal: controller.signal
-        }).then((body) => {
-            clearTimeout(timeout);
-            if (!body.ok)
-                throw new Error('MURASAME_ERROR: Response received is not ok.');
-            if (body.status !== 200)
-                throw new Error(`MURASAME_ERROR: Code ${body.status}`);
-            return body.json();
-        }, (error) => {
-            clearTimeout(timeout);
-            if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
-            throw error;
-        });
+        })
+            .then((body) => {
+                clearTimeout(timeout);
+                if (!body.ok)
+                    throw new Error('MURASAME_ERROR: Response received is not ok.');
+                if (body.status !== 200)
+                    throw new Error(`MURASAME_ERROR: Code ${body.status}`);
+                return body.json();
+            })             
+            .catch((error) => {
+                clearTimeout(timeout);
+                if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
+                throw error;
+            });
     }
 
     /**
@@ -248,7 +250,8 @@ class Murasame {
                 if (body.status !== 200)
                     throw new Error(`MURASAME_ERROR: Code ${body.status}`);
                 return body.json();
-            }, (error) => {
+            })
+            .catch((error) => {
                 clearTimeout(timeout);
                 if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
                 throw error;
