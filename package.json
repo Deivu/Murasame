@@ -1,6 +1,6 @@
 {
   "name": "murasame",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A wrapper around My Waifu List (https://mywaifulist.docs.stoplight.io/api-reference)",
   "main": "index.js",
   "scripts": {
