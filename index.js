@@ -1,4 +1,4 @@
 module.exports = {
-    Murasame: require('./src/Mursame.js'),
+    Murasame: require('./src/Murasame.js'),
     version: require('./package.json').version
 };
