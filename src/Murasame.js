@@ -1,18 +1,33 @@
-const fetch = require('node-fetch');
+const Fetch = require('node-fetch');
 const AbortController = require('abort-controller');
-
+const { name, version, repository } = require('../package.json');
 class Murasame {
     /**
      * MyWaifuList Murasame client
      * @param {string} token API key that has been registered with MyWaifuList
+     * @param {Object} options
+     * @param {?number} [options.timeout=5000] Timeout before cancelling a request
+     * @param {?string} [options.userAgent='{package}/{version} (+{link})'] UserAgent to use on requests
      */
-    constructor(token) {
+    constructor(token, options = {}) {
         /**
          * MyWaifuList API Token
          * @private
          * @type {string}
          */
         Object.defineProperty(this, 'token', { value: token });
+        /**
+         * Timeout for making requests
+         * @private
+         * @type {string}
+         */
+        Object.defineProperty(this, 'timeout', { value: options.timeout || 5000 });
+        /**
+         * Useragent to use for requests
+         * @private
+         * @type {string}
+         */
+        Object.defineProperty(this, 'userAgent', { value: options.userAgent || `${name}/${version} (+${repository.url})` });
         /**
         * The Base URL of the MyWaifuList API
         * @type {string} 
@@ -208,26 +223,17 @@ class Murasame {
     _post(endpoint, term) {
         const url = new URL(this.baseurl + endpoint);
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 15000);
-        return fetch(url.toString(), {
+        const timeout = setTimeout(() => controller.abort(), this.timeout);
+        return Fetch(url.toString(), {
             method: 'POST',
             body: JSON.stringify({ term }),
-            headers: { 'Content-Type': 'application/json', apikey: this.token },
-            signal: controller.signal
-        })
+            headers: { 'User-Agent': this.userAgent, 'Content-Type': 'application/json', apikey: this.token },
+            signal: controller.signal })
             .then((body) => {
-                clearTimeout(timeout);
-                if (!body.ok)
-                    throw new Error('MURASAME_ERROR: Response received is not ok.');
-                if (body.status !== 200)
-                    throw new Error(`MURASAME_ERROR: Code ${body.status}`);
+                if (!body.ok) throw new Error('Response received is not ok.');
                 return body.json();
-            })             
-            .catch((error) => {
-                clearTimeout(timeout);
-                if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
-                throw error;
-            });
+            })
+            .finally(() => clearTimeout(timeout));
     }
 
     /**
@@ -241,21 +247,13 @@ class Murasame {
         const url = new URL(this.baseurl + endpoint);
         if (query) url.search = new URLSearchParams(query);
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 15000);
-        return fetch(url.toString(), { headers: { apikey: this.token }, signal: controller.signal })
+        const timeout = setTimeout(() => controller.abort(), this.timeout);
+        return Fetch(url.toString(), { headers: { 'User-Agent': this.userAgent, apikey: this.token }, signal: controller.signal })
             .then((body) => {
-                clearTimeout(timeout);
-                if (!body.ok)
-                    throw new Error('MURASAME_ERROR: Response received is not ok.');
-                if (body.status !== 200)
-                    throw new Error(`MURASAME_ERROR: Code ${body.status}`);
+                if (!body.ok) throw new Error('Response received is not ok.');
                 return body.json();
             })
-            .catch((error) => {
-                clearTimeout(timeout);
-                if (error.name === 'AbortError') error = new Error('MURSAME_ERROR: Request Timed Out');
-                throw error;
-            });
+            .finally(() => clearTimeout(timeout));
     }
 }
 
